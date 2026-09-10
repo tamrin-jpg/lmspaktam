@@ -1,0 +1,8 @@
+{
+  "name": "SMK SmartLMS - Sistem Manajemen Kelas & Pembelajaran",
+  "description": "Aplikasi LMS SMK lengkap dengan kuis interaktif berpenilaian otomatis, absensi realtime, analitik progres, notifikasi tenggat waktu, manajemen kelas, forum diskusi, import siswa Excel, dan unduh rapor PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

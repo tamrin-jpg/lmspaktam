@@ -1,0 +1,169 @@
+{
+  "entities": {
+    "classes": {
+      "title": "SMK Class",
+      "description": "Rombongan belajar atau kelas kejuruan SMK",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "grade": { "type": "string", "enum": ["X", "XI", "XII"] },
+        "jurusan": { "type": "string" },
+        "code": { "type": "string" },
+        "waliKelas": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "studentCount": { "type": "number" }
+      },
+      "required": ["id", "name", "grade", "jurusan", "code"]
+    },
+    "students": {
+      "title": "Student",
+      "description": "Data identitas dan profil siswa SMK",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nisn": { "type": "string" },
+        "name": { "type": "string" },
+        "kelasId": { "type": "string" },
+        "className": { "type": "string" },
+        "jurusan": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "gender": { "type": "string", "enum": ["L", "P"] },
+        "password": { "type": "string" },
+        "avatar": { "type": "string" },
+        "attendanceRate": { "type": "number" },
+        "averageScore": { "type": "number" },
+        "totalQuizzesTaken": { "type": "number" }
+      },
+      "required": ["id", "nisn", "name", "kelasId"]
+    },
+    "quizzes": {
+      "title": "Quiz",
+      "description": "Kuis dan evaluasi pembelajaran interaktif",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "classId": { "type": "string" },
+        "className": { "type": "string" },
+        "subject": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "deadline": { "type": "string" },
+        "passingScore": { "type": "number" },
+        "questions": { "type": "array" },
+        "totalPoints": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "classId", "subject", "questions"]
+    },
+    "submissions": {
+      "title": "Quiz Submission",
+      "description": "Hasil dan lembar jawaban kuis siswa",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "quizId": { "type": "string" },
+        "quizTitle": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentNisn": { "type": "string" },
+        "classId": { "type": "string" },
+        "score": { "type": "number" },
+        "totalPoints": { "type": "number" },
+        "percentage": { "type": "number" },
+        "passed": { "type": "boolean" },
+        "submittedAt": { "type": "string" },
+        "answers": { "type": "object" }
+      },
+      "required": ["id", "quizId", "studentId", "score", "percentage"]
+    },
+    "attendanceSessions": {
+      "title": "Attendance Session",
+      "description": "Sesi absensi real-time kelas yang dibuka guru",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "className": { "type": "string" },
+        "subject": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "title": { "type": "string" },
+        "startedAt": { "type": "string" },
+        "expiresAt": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "secretCode": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "classId", "teacherName", "expiresAt", "isActive"]
+    },
+    "attendanceRecords": {
+      "title": "Attendance Record",
+      "description": "Catatan log presensi siswa",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "classId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "studentNisn": { "type": "string" },
+        "status": { "type": "string", "enum": ["Hadir", "Sakit", "Izin", "Alpa"] },
+        "timestamp": { "type": "string" },
+        "date": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "classId", "studentId", "status", "date"]
+    },
+    "forumPosts": {
+      "title": "Forum Post",
+      "description": "Diskusi ruang kelas antara guru dan siswa",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorRole": { "type": "string", "enum": ["guru", "siswa"] },
+        "classId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "likes": { "type": "number" },
+        "likedBy": { "type": "array" },
+        "replies": { "type": "array" }
+      },
+      "required": ["id", "title", "content", "authorName", "classId"]
+    }
+  },
+  "firestore": {
+    "/classes/{classId}": {
+      "schema": "classes",
+      "description": "Koleksi data rombongan belajar / kelas SMK"
+    },
+    "/students/{studentId}": {
+      "schema": "students",
+      "description": "Koleksi akun data siswa terdaftar"
+    },
+    "/quizzes/{quizId}": {
+      "schema": "quizzes",
+      "description": "Koleksi kuis interaktif kejuruan"
+    },
+    "/submissions/{submissionId}": {
+      "schema": "submissions",
+      "description": "Koleksi hasil pengumpulan kuis siswa"
+    },
+    "/attendanceSessions/{sessionId}": {
+      "schema": "attendanceSessions",
+      "description": "Koleksi sesi presensi real-time"
+    },
+    "/attendanceRecords/{recordId}": {
+      "schema": "attendanceRecords",
+      "description": "Koleksi catatan kehadiran siswa"
+    },
+    "/forumPosts/{postId}": {
+      "schema": "forumPosts",
+      "description": "Koleksi postingan diskusi kelas"
+    }
+  }
+}

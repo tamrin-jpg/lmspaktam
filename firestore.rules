@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Classes collection
+    match /classes/{classId} {
+      allow read: if true;
+      allow write: if isValidId(classId);
+    }
+
+    // Students collection
+    match /students/{studentId} {
+      allow read: if true;
+      allow write: if isValidId(studentId);
+    }
+
+    // Quizzes collection
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if isValidId(quizId);
+    }
+
+    // Submissions collection
+    match /submissions/{submissionId} {
+      allow read: if true;
+      allow write: if isValidId(submissionId);
+    }
+
+    // Attendance sessions
+    match /attendanceSessions/{sessionId} {
+      allow read: if true;
+      allow write: if isValidId(sessionId);
+    }
+
+    // Attendance records
+    match /attendanceRecords/{recordId} {
+      allow read: if true;
+      allow write: if isValidId(recordId);
+    }
+
+    // Forum posts
+    match /forumPosts/{postId} {
+      allow read: if true;
+      allow write: if isValidId(postId);
+    }
+
+    // Health / test collection
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+  }
+}
